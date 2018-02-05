@@ -1,0 +1,45 @@
+USB Protocol:
+
+To look at raw data: cat /dev/input/jsX | xxd -g 1 -c 8
+
+Byte 0: Byte 0 of counter (LSB)
+Byte 1: Byte 1 of counter
+Byte 2: Byte 2 of counter
+Byte 3: Byte 3 of counter (MSB)
+Bytes 4 (LSB) and 5 (MSB):
+  If joystick or D-pad:
+    If Up or Left:
+      0x0000 - Centered
+      0xfeae - First measurable position from center
+      0x8001 - Furthest measurable position from center (or D-pad direction)
+    If Right or Down:
+      0x0000 - Centered
+      0x0151 - First measurable position from center
+      0x7fff - Furthest measurable position from center (or D-pad direction)
+  If button:
+    0x0000 - No button press
+    0x0001 - Button press
+Byte 6:
+  0x01 - Button
+  0x02 - Joystick or D-pad
+Byte 7:
+  If Button:
+    0x00 - Y
+    0x01 - B
+    0x02 - A
+    0x03 - X
+    0x04 - LB
+    0x05 - RB
+    0x06 - ZL / LT
+    0x07 - ZR / RT
+    0x08 - Minus
+    0x09 - Plus
+    0x0c - Home
+    0x0d - Circle in Square button?
+  If Joystick/D-pad:
+    0x00 - Left Stick, Left/Right
+    0x01 - Left Stick, Up/Down
+    0x02 - Right Stick, Left/Right
+    0x03 - Right Stick, Up/Down
+    0x04 - D-pad Left/Right
+    0x05 - D-pad Up/Down
